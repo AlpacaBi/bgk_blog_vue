@@ -1,5 +1,5 @@
 # bgk_blog_vue
-
+毕国康的个人博客vue版
 > A Vue.js project
 
 ## Build Setup
