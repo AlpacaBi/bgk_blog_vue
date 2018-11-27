@@ -80,20 +80,15 @@
 <script>
 
 import {mapState, mapActions, mapMutations} from 'vuex'
-import {OPEN_INFO_SHOW, CLOSE_INFO_SHOW, OPEN_MONEY_SHOW, CLOSE_MONEY_SHOW} from '../../store/mutation-types'
+import {OPEN_INFO_SHOW, CLOSE_INFO_SHOW, OPEN_MONEY_SHOW, CLOSE_MONEY_SHOW, CHANGE_BANNER} from '../../store/mutation-types'
 
 export default {
   name: 'Home',
-  data () {
-    return {
-      bannerH: 500
-    }
-  },
   methods: {
-    ...mapMutations([OPEN_INFO_SHOW], [CLOSE_INFO_SHOW], [OPEN_MONEY_SHOW], [CLOSE_MONEY_SHOW]),
+    ...mapMutations([OPEN_INFO_SHOW], [CLOSE_INFO_SHOW], [OPEN_MONEY_SHOW], [CLOSE_MONEY_SHOW], [CHANGE_BANNER]),
     ...mapActions(['getNewsList']),
     setBannerH () {
-      this.bannerH = document.body.clientWidth / 6
+      this.$store.commit(CHANGE_BANNER)
     },
     open_info_show () {
       this.$store.commit(OPEN_INFO_SHOW)
@@ -112,7 +107,8 @@ export default {
     ...mapState({
       newslist: state => state.home.newslist,
       infoShow: state => state.home.infoShow,
-      moneyShow: state => state.home.moneyShow
+      moneyShow: state => state.home.moneyShow,
+      bannerH: state => state.home.bannerH
     })
   },
   mounted () {

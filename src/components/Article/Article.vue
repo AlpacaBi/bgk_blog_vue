@@ -42,75 +42,60 @@
 </template>
 
 <script>
+import {mapState, mapActions, mapMutations} from 'vuex'
+import {CHANGE_TAB, CHANGE_TABNAME} from '../../store/mutation-types'
 export default {
   name: 'Article',
   data () {
     return {
-      tab: 'all',
-      tabName: '所有文章：',
-      articleList: [],
-      articleData: []
+      tab: 'all'
     }
   },
-
   methods: {
+    ...mapMutations([CHANGE_TAB], [CHANGE_TABNAME]),
+    ...mapActions(['getArticleListData', 'getArticles']),
     handleClick () {
       switch (this.tab) {
         case 'all':
-          this.tabName = '所有文章：'
+          this.$store.commit(CHANGE_TABNAME, '所有文章：')
           break
         case 'javascript':
-          this.tabName = 'javascript和es6：'
+          this.$store.commit(CHANGE_TABNAME, 'javascript和es6：')
           break
         case 'java':
-          this.tabName = 'java和java框架：'
+          this.$store.commit(CHANGE_TABNAME, 'java和java框架：')
           break
         case 'htmlcss':
-          this.tabName = 'html&css：'
+          this.$store.commit(CHANGE_TABNAME, 'html&css：')
           break
         case 'react':
-          this.tabName = 'react：'
+          this.$store.commit(CHANGE_TABNAME, 'react：')
           break
         case 'vue':
-          this.tabName = 'vue：'
+          this.$store.commit(CHANGE_TABNAME, 'vue：')
           break
         case 'angular':
-          this.tabName = 'angular：'
+          this.$store.commit(CHANGE_TABNAME, 'angular：')
           break
         case 'cpp':
-          this.tabName = 'C和C++：'
+          this.$store.commit(CHANGE_TABNAME, 'C和C++：')
           break
         case 'hardware':
-          this.tabName = '硬件：'
+          this.$store.commit(CHANGE_TABNAME, '硬件：')
           break
         case 'other':
-          this.tabName = '其他杂碎：'
+          this.$store.commit(CHANGE_TABNAME, '其他杂碎：')
           break
       }
       this.getArticleListData(this.tab)
-    },
-    getArticleListData (tabid) {
-      this.$http.get('/apis/getArticleList?tabid=' + tabid)
-        .then(result => {
-          this.articleList = result.body
-          console.log(this.articleList.length)
-          if (this.articleList.length > 0) {
-            this.getArticles(this.articleList[0].ID)
-          } else {
-            console.log('none')
-            this.articleData = []
-            this.articleList = []
-            console.log(this.articleList)
-            console.log(this.articleData)
-          }
-        })
-    },
-    getArticles (id) {
-      this.$http.get('/apis/getArticles?id=' + id)
-        .then(result => {
-          this.articleData = result.body
-        })
     }
+  },
+  computed: {
+    ...mapState({
+      articleList: state => state.article.articleList,
+      articleData: state => state.article.articleData,
+      tabName: state => state.article.tabName
+    })
   },
   created () {
     this.getArticleListData('all')
