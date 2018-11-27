@@ -1,11 +1,12 @@
-import {GET_NEWS_LIST, OPEN_INFO_SHOW, CLOSE_INFO_SHOW, OPEN_MONEY_SHOW, CLOSE_MONEY_SHOW} from './mutation-types'
+import {GET_NEWS_LIST, OPEN_INFO_SHOW, CLOSE_INFO_SHOW, OPEN_MONEY_SHOW, CLOSE_MONEY_SHOW, CHANGE_BANNER} from './mutation-types'
 import Vue from 'vue'
 const Http = new Vue()
 const home = {
   state: {
     newslist: [],
     infoShow: false,
-    moneyShow: false
+    moneyShow: false,
+    bannerH: 500
   },
   mutations: {
     [GET_NEWS_LIST] (state, data) {
@@ -22,6 +23,9 @@ const home = {
     },
     [CLOSE_MONEY_SHOW] (state) {
       state.moneyShow = false
+    },
+    [CHANGE_BANNER] (state) {
+      state.bannerH = document.body.clientWidth / 6
     }
   },
   actions: {
