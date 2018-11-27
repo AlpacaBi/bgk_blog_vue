@@ -28,8 +28,8 @@
         <img src="../../images/touxiang.png" width="100%" height="100%"/>
         <h3 style="font-size: 30px">Alpaca Bi</h3>
         <h5 style="color:grey; line-height: 1;">talk and code is cheap，show me the money</h5>
-        <el-button type="primary" @click="infoShow = true">联系本人</el-button>
-        <el-button type="success" @click="moneyShow = true">给我打钱</el-button>
+        <el-button type="primary" @click="open_info_show">联系本人</el-button>
+        <el-button type="success" @click="open_money_show">给我打钱</el-button>
       </el-col>
       <el-col :sm="12">
         <h1 style="font-size: 36px">最新文章：</h1>
@@ -58,8 +58,8 @@
         <p><a href="https://github.com/biguokang" target="_blank"><b>https://github.com/biguokang</b></a></p>
       </span>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="infoShow = false">取 消</el-button>
-    <el-button type="primary" @click="infoShow = false">确 定</el-button>
+    <el-button @click="close_info_show">取 消</el-button>
+    <el-button type="primary" @click="close_info_show">确 定</el-button>
   </span>
     </el-dialog>
 
@@ -71,33 +71,49 @@
         <img src="../../images/pay.png" width="100%" height="100%">
       </span>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="moneyShow = false">取 消</el-button>
-    <el-button type="primary" @click="moneyShow = false">确 定</el-button>
+    <el-button @click="close_money_show">取 消</el-button>
+    <el-button type="primary" @click="close_money_show">确 定</el-button>
   </span>
     </el-dialog>
   </div>
 </template>
 <script>
+
+import {mapState, mapActions, mapMutations} from 'vuex'
+import {OPEN_INFO_SHOW, CLOSE_INFO_SHOW, OPEN_MONEY_SHOW, CLOSE_MONEY_SHOW} from '../../store/mutation-types'
+
 export default {
   name: 'Home',
   data () {
     return {
-      bannerH: 500,
-      infoShow: false,
-      moneyShow: false,
-      newslist: []
+      bannerH: 500
     }
   },
   methods: {
+    ...mapMutations([OPEN_INFO_SHOW], [CLOSE_INFO_SHOW], [OPEN_MONEY_SHOW], [CLOSE_MONEY_SHOW]),
+    ...mapActions(['getNewsList']),
     setBannerH () {
       this.bannerH = document.body.clientWidth / 6
     },
-    getNewsList () {
-      this.$http.get('/apis/homeArticleList')
-        .then(result => {
-          this.newslist = result.body
-        })
+    open_info_show () {
+      this.$store.commit(OPEN_INFO_SHOW)
+    },
+    close_info_show () {
+      this.$store.commit(CLOSE_INFO_SHOW)
+    },
+    open_money_show () {
+      this.$store.commit(OPEN_MONEY_SHOW)
+    },
+    close_money_show () {
+      this.$store.commit(CLOSE_MONEY_SHOW)
     }
+  },
+  computed: {
+    ...mapState({
+      newslist: state => state.home.newslist,
+      infoShow: state => state.home.infoShow,
+      moneyShow: state => state.home.moneyShow
+    })
   },
   mounted () {
     this.setBannerH()

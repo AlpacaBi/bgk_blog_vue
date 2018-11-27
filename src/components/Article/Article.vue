@@ -14,7 +14,7 @@
       <el-tab-pane label="其它杂碎" name="other">其它杂碎</el-tab-pane>
     </el-tabs>
     </el-row>
-    <el-row :gutter="20">
+    <el-row :gutter="20" v-if="articleList.length>0">
       <el-col :sm="6">
         <div>
           <h1 style="font-size: 20px">{{tabName}}</h1><hr/>
@@ -35,6 +35,9 @@
         <h3 v-html="articleData[0].article_context" style="line-height:1;"></h3>
       </el-col>
     </el-row>
+    <el-row :gutter="20" v-else>
+      nothing
+    </el-row>
   </div>
 </template>
 
@@ -49,6 +52,7 @@ export default {
       articleData: []
     }
   },
+
   methods: {
     handleClick () {
       switch (this.tab) {
@@ -89,10 +93,15 @@ export default {
       this.$http.get('/apis/getArticleList?tabid=' + tabid)
         .then(result => {
           this.articleList = result.body
+          console.log(this.articleList.length)
           if (this.articleList.length > 0) {
             this.getArticles(this.articleList[0].ID)
           } else {
+            console.log('none')
             this.articleData = []
+            this.articleList = []
+            console.log(this.articleList)
+            console.log(this.articleData)
           }
         })
     },

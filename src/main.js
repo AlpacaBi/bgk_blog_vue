@@ -7,6 +7,7 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
 import forge from 'node-forge'
+import store from './store/store'
 
 Vue.use(ElementUI)
 Vue.use(VueResource)
@@ -23,6 +24,7 @@ Vue.http.options.headers = {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

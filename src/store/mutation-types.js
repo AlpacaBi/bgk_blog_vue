@@ -1,0 +1,5 @@
+export const GET_NEWS_LIST = 'GET_NEWS_LIST'
+export const OPEN_INFO_SHOW = 'OPEN_INFO_SHOW'
+export const CLOSE_INFO_SHOW = 'CLOSE_INFO_SHOW'
+export const OPEN_MONEY_SHOW = 'OPEN_MONEY_SHOW'
+export const CLOSE_MONEY_SHOW = 'CLOSE_MONEY_SHOW'
