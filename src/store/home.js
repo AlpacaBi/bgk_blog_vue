@@ -31,7 +31,6 @@ const home = {
   actions: {
     async getNewsList (context) {
       let res = await Http.$http.get('/apis/homeArticleList')
-      await console.log('---' + res + '---')
       await context.commit(GET_NEWS_LIST, res.body)
     }
   }
